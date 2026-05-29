@@ -26,7 +26,7 @@ exports.signUp = async (req, res) => {
     return successResponse(res, 201, "User registered successfully", data);
   } catch (error) {
     console.log("Error at createUser API:", error);
-    return errorResponse(res, 500, "Something want wrong");
+    return errorResponse(res, 500, "Internal server error");
   }
 };
 
@@ -48,6 +48,8 @@ exports.login = async (req, res) => {
     });
   } catch (error) {
     console.log("Login Error:", error);
-    return errorResponse(res, 500, "Something want wrong");
+    return errorResponse(res, 500, "Internal server error");
   }
 };
+
+

@@ -15,7 +15,20 @@ module.exports = async (req, res, next) => {
       return errorResponse(res, 401, "Invalid token");
     }
 
-    req.user = data.user;
+    const { data: profile, error: profileError } = await supabase
+      .from("users")
+      .select("id, name, email")
+      .eq("id", data.user.id)
+      .single();
+
+    if (profileError || !profile) {
+      return errorResponse(res, 401, "User profile not found");
+    }
+
+    req.user = {
+      ...data.user,
+      profile,
+    };
 
     next();
   } catch (error) {
